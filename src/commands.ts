@@ -45,6 +45,7 @@ export const COMMAND_GROUPS: ReadonlyMap<string, CommandGroup> = new Map([
       ["candles", "get_candlesticks", "Get candlestick/kline data", "read"],
       ["mark-price", "get_mark_price", "Get mark price", "read"],
       ["funding-rate", "get_funding_rate", "Get funding rate", "read"],
+      ["position-tiers", "get_position_tiers", "Get position tier info (leverage/margin per tier)", "read"],
     ]),
   ],
   [
@@ -83,6 +84,7 @@ export const COMMAND_GROUPS: ReadonlyMap<string, CommandGroup> = new Map([
       ["deposits", "get_deposit_history", "Get deposit history", "read"],
       ["withdrawals", "get_withdrawal_history", "Get withdrawal history", "read"],
       ["apikey-info", "get_apikey_info", "Get API key info", "read"],
+      ["currencies", "get_currencies", "Get supported currencies info", "read"],
     ]),
   ],
 ]);

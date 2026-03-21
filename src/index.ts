@@ -17,6 +17,9 @@ import {
 import type { ModuleId, ToolSpec } from "blofin-core";
 import { resolveCredentials } from "./config.js";
 import { COMMAND_GROUPS, resolveCommand, groupNames } from "./commands.js";
+
+export { COMMAND_GROUPS, resolveCommand, groupNames } from "./commands.js";
+export type { CommandDef, CommandGroup } from "./commands.js";
 import {
   outputResult,
   outputError,
