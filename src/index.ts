@@ -6,7 +6,7 @@
 
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { parseArgs } from "node:util";
 import {
   ALL_MODULES,
@@ -326,7 +326,7 @@ function isMainModule(): boolean {
     return false;
   }
   const self = fileURLToPath(import.meta.url);
-  const invoked = resolve(process.argv[1]);
+  const invoked = realpathSync(resolve(process.argv[1]));
   return self === invoked;
 }
 
