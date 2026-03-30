@@ -1,6 +1,6 @@
 {
   "name": "blofin-cli",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -12,7 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "blofin-core": "^0.3.0",
+    "blofin-core": "^0.3.1",
     "cli-table3": "^0.6.5"
   },
   "devDependencies": {
@@ -20,6 +20,10 @@
     "tsup": "^8.0.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blofin/blofin-cli.git"
   },
   "engines": {
     "node": ">=20"
