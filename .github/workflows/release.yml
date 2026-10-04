@@ -3,13 +3,24 @@ on:
   push:
     branches: [main]
 
+# Least privilege: the job publishes to npm and creates a git tag, so it needs
+# contents: write. Nothing else is granted.
+permissions:
+  contents: write
+
+# Avoid overlapping publishes to the npm registry from two commits at once.
+concurrency:
+  group: release-npm
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Tagging pushes a commit object, so full history is required.
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -17,7 +28,8 @@ jobs:
           cache: pnpm
           registry-url: https://registry.npmjs.org
 
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run typecheck
       - run: pnpm run test
       - run: pnpm run build
 
@@ -41,6 +53,13 @@ jobs:
 
       - name: Tag release
         if: steps.version.outputs.changed == 'true'
+        env:
+          # Passed via env instead of being interpolated directly into the
+          # shell script. Using ${{ }} inside `run` expands attacker-influenced
+          # values (branch names, commit messages) as shell code.
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
-          git tag "v${{ steps.version.outputs.version }}"
-          git push origin "v${{ steps.version.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "v$VERSION"
+          git push origin "v$VERSION"
